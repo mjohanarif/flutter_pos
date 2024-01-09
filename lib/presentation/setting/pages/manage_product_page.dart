@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pos/core/assets/assets.gen.dart';
 import 'package:flutter_pos/core/components/spaces.dart';
 import 'package:flutter_pos/presentation/home/bloc/product/product_bloc.dart';
-import 'package:flutter_pos/presentation/home/models/product_category.dart';
-import 'package:flutter_pos/presentation/home/models/product_model.dart';
 import 'package:flutter_pos/presentation/setting/pages/add_product_page.dart';
 import 'package:flutter_pos/presentation/setting/widgets/menu_product_item.dart';
 
@@ -16,36 +13,6 @@ class ManageProductPage extends StatefulWidget {
 }
 
 class _ManageProductPageState extends State<ManageProductPage> {
-  final List<ProductModel> products = [
-    ProductModel(
-      image: Assets.images.f1.path,
-      name: 'Vanila Late Vanila itu',
-      category: ProductCategory.drink,
-      price: 20000,
-      stock: 10,
-    ),
-    ProductModel(
-      image: Assets.images.f2.path,
-      name: 'V60',
-      category: ProductCategory.drink,
-      price: 120000,
-      stock: 11,
-    ),
-    ProductModel(
-      image: Assets.images.f3.path,
-      name: 'Americano',
-      category: ProductCategory.drink,
-      price: 210000,
-      stock: 10,
-    ),
-    ProductModel(
-      image: Assets.images.f4.path,
-      name: 'Cappucino',
-      category: ProductCategory.drink,
-      price: 220000,
-      stock: 10,
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

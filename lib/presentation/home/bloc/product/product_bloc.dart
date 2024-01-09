@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos/data/datasources/product_local_datasource.dart';
+import 'package:flutter_pos/data/model/request/product_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:flutter_pos/data/datasources/product_remote_datasource.dart';
@@ -77,11 +78,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           const _Loading(),
         );
 
-        final newProduct = await ProductLocalDatasource.instance.insertProduct(
+        final response = await productRemoteDatasource.addProduct(
           event.product,
         );
 
-        products.add(newProduct);
+        response.fold(
+          (l) => emit(
+            _Error(l),
+          ),
+          (r) {
+            products.add(r.data);
+            emit(
+              _Success(products),
+            );
+          },
+        );
 
         emit(
           _Success(products),

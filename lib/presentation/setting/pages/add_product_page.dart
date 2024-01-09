@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos/core/components/buttons.dart';
@@ -8,9 +6,10 @@ import 'package:flutter_pos/core/components/custom_text_field.dart';
 import 'package:flutter_pos/core/components/image_picker_widget.dart';
 import 'package:flutter_pos/core/components/spaces.dart';
 import 'package:flutter_pos/core/extensions/string_ext.dart';
-import 'package:flutter_pos/data/model/response/product_response_model.dart';
+import 'package:flutter_pos/data/model/request/product_request_model.dart';
 import 'package:flutter_pos/presentation/home/bloc/product/product_bloc.dart';
 import 'package:flutter_pos/presentation/setting/models/category_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({super.key});
@@ -26,7 +25,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   String category = 'food';
 
-  File? imageFile;
+  XFile? imageFile;
 
   bool isBestSeller = false;
 
@@ -154,14 +153,13 @@ class _AddProductPageState extends State<AddProductPage> {
                 success: (response) {
                   return Button.filled(
                     onPressed: () {
-                      final Product product = Product(
+                      final ProductRequestModel product = ProductRequestModel(
                         name: nameController!.text,
                         price: priceController!.text.toIntegerFromText,
                         stock: stockController!.text.toIntegerFromText,
                         category: category,
-                        isBestSeller: isBestSeller,
-                        image: imageFile!.absolute.path,
-                        isSync: false,
+                        isBestSeller: isBestSeller ? 1 : 0,
+                        image: imageFile!,
                       );
 
                       context.read<ProductBloc>().add(

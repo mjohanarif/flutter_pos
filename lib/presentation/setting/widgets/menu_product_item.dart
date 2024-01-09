@@ -72,84 +72,82 @@ class MenuProductItem extends StatelessWidget {
                                 contentPadding: const EdgeInsets.all(
                                   16,
                                 ),
-                                content: Container(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            data.name,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                            ),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data.name,
+                                          style: const TextStyle(
+                                            fontSize: 20,
                                           ),
-                                          IconButton(
-                                            onPressed: () {
-                                              Navigator.pop(
-                                                context,
-                                              );
-                                            },
-                                            icon: const Icon(
-                                              Icons.close,
-                                            ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.pop(
+                                              context,
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            Icons.close,
                                           ),
-                                        ],
-                                      ),
-                                      const SpaceHeight(
+                                        ),
+                                      ],
+                                    ),
+                                    const SpaceHeight(
+                                      10,
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(
                                         10,
                                       ),
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                          10,
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${Variables.imageBaseUrl}${data.image}',
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(
+                                          Icons.food_bank_outlined,
+                                          size: 80,
                                         ),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              '${Variables.imageBaseUrl}${data.image}',
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(
-                                            Icons.food_bank_outlined,
-                                            size: 80,
-                                          ),
-                                          width: 80,
-                                        ),
+                                        width: 80,
                                       ),
-                                      const SpaceHeight(
-                                        10,
+                                    ),
+                                    const SpaceHeight(
+                                      10,
+                                    ),
+                                    Text(
+                                      data.category,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
                                       ),
-                                      Text(
-                                        data.category,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                        ),
+                                    ),
+                                    const SpaceHeight(
+                                      10,
+                                    ),
+                                    Text(
+                                      data.price.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
                                       ),
-                                      const SpaceHeight(
-                                        10,
+                                    ),
+                                    const SpaceHeight(
+                                      10,
+                                    ),
+                                    Text(
+                                      data.stock.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
                                       ),
-                                      Text(
-                                        data.price.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      const SpaceHeight(
-                                        10,
-                                      ),
-                                      Text(
-                                        data.stock.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               );
                             },

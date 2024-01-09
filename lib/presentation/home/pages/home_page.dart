@@ -145,7 +145,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                       itemBuilder: (context, index) => ProductCard(
                         data: response[index],
-                        onCartButton: () {},
                       ),
                     );
                   },
