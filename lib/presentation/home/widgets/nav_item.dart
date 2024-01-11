@@ -61,7 +61,10 @@ class NavItem extends StatelessWidget {
                           );
                         }
                         return badges.Badge(
-                          badgeContent: Text(totalQuantity.toString()),
+                          badgeContent: Text(
+                            totalQuantity.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
                           child: SizedBox(
                             width: 25.0,
                             height: 25.0,

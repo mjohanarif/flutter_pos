@@ -10,6 +10,7 @@ import 'package:flutter_pos/data/datasources/product_local_datasource.dart';
 import 'package:flutter_pos/presentation/auth/pages/login_page.dart';
 import 'package:flutter_pos/presentation/home/bloc/logout/logout_bloc.dart';
 import 'package:flutter_pos/presentation/home/bloc/product/product_bloc.dart';
+import 'package:flutter_pos/presentation/order/models/order_model.dart';
 import 'package:flutter_pos/presentation/setting/pages/manage_product_page.dart';
 
 class SettingPage extends StatefulWidget {
@@ -119,6 +120,25 @@ class _SettingPageState extends State<SettingPage> {
               );
             },
           ),
+          FutureBuilder<List<OrderModel>>(
+              future: ProductLocalDatasource.instance.getOrderByIsSync(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          snapshot.data![index].totalQuantity.toString(),
+                        ),
+                      );
+                    },
+                    itemCount: snapshot.data!.length,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }),
           const Divider(),
         ],
       ),
