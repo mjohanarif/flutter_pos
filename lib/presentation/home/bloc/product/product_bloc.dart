@@ -99,5 +99,37 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         );
       },
     );
+
+    on<_SearchProduct>(
+      (event, emit) async {
+        emit(
+          const _Loading(),
+        );
+
+        final newProducts = products
+            .where(
+              (element) => element.name
+                  .toLowerCase()
+                  .contains(event.query.toLowerCase()),
+            )
+            .toList();
+
+        emit(
+          _Success(newProducts),
+        );
+      },
+    );
+
+    on<_FetchAllFromState>(
+      (event, emit) async {
+        emit(
+          const _Loading(),
+        );
+
+        emit(
+          _Success(products),
+        );
+      },
+    );
   }
 }

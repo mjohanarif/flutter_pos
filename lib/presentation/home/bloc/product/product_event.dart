@@ -9,4 +9,6 @@ class ProductEvent with _$ProductEvent {
   const factory ProductEvent.fetchLocal() = _FetchLocal;
   const factory ProductEvent.addProduct(ProductRequestModel product) =
       _AddProduct;
+  const factory ProductEvent.searchProduct(String query) = _SearchProduct;
+  const factory ProductEvent.fetchAllFromState() = _FetchAllFromState;
 }
