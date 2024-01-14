@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter_pos/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_pos/data/model/response/qris_response_model.dart';
 import 'package:flutter_pos/data/model/response/qris_status_response_model.dart';
 import 'package:http/http.dart' as http;
 
-// TODO add auth header
 class MidtransRemoteDatasource {
   String generateBasicAuthHeader(String serverKey) {
     final base64Credentials = base64Encode(
@@ -18,10 +18,11 @@ class MidtransRemoteDatasource {
     String orderId,
     int grossAmount,
   ) async {
+    final serverKey = await AuthLocalDatasource().getMidtransServerKey();
     final headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': generateBasicAuthHeader(''),
+      'Authorization': generateBasicAuthHeader(serverKey),
     };
 
     final body = jsonEncode({
@@ -50,10 +51,11 @@ class MidtransRemoteDatasource {
   }
 
   Future<QrisStatusResponseModel> checkPaymentStatus(String orderId) async {
+    final serverKey = await AuthLocalDatasource().getMidtransServerKey();
     final headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': generateBasicAuthHeader(''),
+      'Authorization': generateBasicAuthHeader(serverKey),
     };
 
     final response = await http.get(
