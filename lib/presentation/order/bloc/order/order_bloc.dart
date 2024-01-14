@@ -20,7 +20,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             event.orders.fold(
                 0,
                 (previousValue, element) =>
-                    previousValue + element.product.price),
+                    previousValue + (element.product.price * element.quantity)),
             event.paymentMethod,
             0,
             0,
@@ -39,7 +39,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         _Success(
           currentStates.products,
           currentStates.totalQuantity,
-          event.nominal,
+          currentStates.totalPrice,
           currentStates.paymentMethod,
           event.nominal,
           currentStates.idKasir,

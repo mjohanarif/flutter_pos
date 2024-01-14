@@ -8,6 +8,7 @@ import 'package:flutter_pos/presentation/home/models/order_item.dart';
 import 'package:flutter_pos/presentation/order/bloc/order/order_bloc.dart';
 import 'package:flutter_pos/presentation/order/widgets/order_card.dart';
 import 'package:flutter_pos/presentation/order/widgets/payment_cash_dialog.dart';
+import 'package:flutter_pos/presentation/order/widgets/payment_qris_dialog.dart';
 import 'package:flutter_pos/presentation/order/widgets/process_button.dart';
 
 class OrderPage extends StatefulWidget {
@@ -91,7 +92,12 @@ class _OrderPageState extends State<OrderPage> {
                     iconPath: Assets.icons.qrCode.path,
                     label: 'QRIS',
                     isActive: value == 2,
-                    onPressed: () => indexValue.value = 2,
+                    onPressed: () {
+                      indexValue.value = 2;
+                      context
+                          .read<OrderBloc>()
+                          .add(OrderEvent.addPaymentMethod('QRIS', orders));
+                    },
                   ),
                   const SpaceWidth(10.0),
                 ],
@@ -109,11 +115,13 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   );
                 } else if (indexValue.value == 2) {
-                  //   showDialog(
-                  //     context: context,
-                  //     barrierDismissible: false,
-                  //     builder: (context) => const PaymentQrisDialog(),
-                  // );
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => PaymentQrisDialog(
+                      price: totalPrices,
+                    ),
+                  );
                 }
               },
             ),

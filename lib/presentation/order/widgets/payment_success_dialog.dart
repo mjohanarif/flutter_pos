@@ -33,7 +33,17 @@ class PaymentSuccessDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: BlocBuilder<OrderBloc, OrderState>(
+      content: BlocConsumer<OrderBloc, OrderState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            orElse: () {},
+            success: (products, totalQuantity, totalPrice, paymentMethod,
+                    nominalBayar, idKasir, namaKasir) =>
+                context.read<CheckoutBloc>().add(
+                      const CheckoutEvent.started(),
+                    ),
+          );
+        },
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () => const SizedBox(),
@@ -46,21 +56,14 @@ class PaymentSuccessDialog extends StatelessWidget {
               idKasir,
               namaKasir,
             ) {
-              context.read<CheckoutBloc>().add(
-                    const CheckoutEvent.started(),
-                  );
-
-              context.read<OrderBloc>().add(
-                    const OrderEvent.started(),
-                  );
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SpaceHeight(12.0),
-                  const _LabelValue(
+                  _LabelValue(
                     label: 'METODE PEMBAYARAN',
-                    value: 'Tunai',
+                    value: paymentMethod,
                   ),
                   const Divider(height: 36.0),
                   _LabelValue(
@@ -70,7 +73,9 @@ class PaymentSuccessDialog extends StatelessWidget {
                   const Divider(height: 36.0),
                   _LabelValue(
                     label: 'NOMINAL BAYAR',
-                    value: nominalBayar.currencyFormatRp,
+                    value: paymentMethod == 'QRIS'
+                        ? totalPrice.currencyFormatRp
+                        : nominalBayar.currencyFormatRp,
                   ),
                   const Divider(height: 36.0),
                   _LabelValue(
@@ -84,6 +89,9 @@ class PaymentSuccessDialog extends StatelessWidget {
                       Flexible(
                         child: Button.filled(
                           onPressed: () {
+                            context.read<OrderBloc>().add(
+                                  const OrderEvent.started(),
+                                );
                             context.pushReplacement(const DashboardPage());
                           },
                           label: 'Selesai',

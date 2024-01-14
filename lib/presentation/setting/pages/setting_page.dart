@@ -129,7 +129,7 @@ class _SettingPageState extends State<SettingPage> {
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Text(
-                          snapshot.data![index].totalQuantity.toString(),
+                          snapshot.data![index].paymentMethod,
                         ),
                       );
                     },
