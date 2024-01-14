@@ -7,6 +7,7 @@ import 'package:flutter_pos/data/datasources/midtrans_remote_datasource.dart';
 import 'package:flutter_pos/data/datasources/product_remote_datasource.dart';
 import 'package:flutter_pos/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:flutter_pos/presentation/auth/pages/login_page.dart';
+import 'package:flutter_pos/presentation/history/bloc/history/history_bloc.dart';
 import 'package:flutter_pos/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_pos/presentation/home/bloc/logout/logout_bloc.dart';
 import 'package:flutter_pos/presentation/home/bloc/product/product_bloc.dart';
@@ -53,6 +54,9 @@ class MainApp extends StatelessWidget {
           create: (context) => QrisBloc(
             MidtransRemoteDatasource(),
           ),
+        ),
+        BlocProvider(
+          create: (context) => HistoryBloc(),
         ),
       ],
       child: MaterialApp(
