@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos/core/extensions/build_context_ext.dart';
 import 'package:flutter_pos/presentation/order/bloc/qris/qris_bloc.dart';
 import 'package:flutter_pos/presentation/order/widgets/payment_success_dialog.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/components/spaces.dart';
 import '../../../core/constants/colors.dart';
@@ -117,6 +118,8 @@ class _PaymentQrisDialogState extends State<PaymentQrisDialog> {
                               idKasir: idKasir,
                               namaKasir: namaKasir,
                               isSync: false,
+                              transactionTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                  .format(DateTime.now()),
                             );
 
                             ProductLocalDatasource.instance

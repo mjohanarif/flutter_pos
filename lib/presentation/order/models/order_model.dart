@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_pos/presentation/home/models/order_item.dart';
 
 class OrderModel {
+  final int? id;
   final String paymentMethod;
   final int nominalBayar;
   final List<OrderItem> orders;
@@ -12,9 +13,11 @@ class OrderModel {
   final int totalPrice;
   final int idKasir;
   final String namaKasir;
+  final String transactionTime;
   final bool isSync;
 
   OrderModel({
+    this.id,
     required this.paymentMethod,
     required this.nominalBayar,
     required this.orders,
@@ -23,29 +26,8 @@ class OrderModel {
     required this.idKasir,
     required this.namaKasir,
     required this.isSync,
+    required this.transactionTime,
   });
-
-  OrderModel copyWith({
-    String? paymentMethod,
-    int? nominalBayar,
-    List<OrderItem>? orders,
-    int? totalQuantity,
-    int? totalPrice,
-    int? idKasir,
-    String? namaKasir,
-    bool? isSync,
-  }) {
-    return OrderModel(
-      paymentMethod: paymentMethod ?? this.paymentMethod,
-      nominalBayar: nominalBayar ?? this.nominalBayar,
-      orders: orders ?? this.orders,
-      totalQuantity: totalQuantity ?? this.totalQuantity,
-      totalPrice: totalPrice ?? this.totalPrice,
-      idKasir: idKasir ?? this.idKasir,
-      namaKasir: namaKasir ?? this.namaKasir,
-      isSync: isSync ?? this.isSync,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -68,6 +50,7 @@ class OrderModel {
       'id_kasir': idKasir,
       'nama_kasir': namaKasir,
       'is_sync': isSync ? 1 : 0,
+      'transaction_time': transactionTime,
     };
   }
 
@@ -86,6 +69,8 @@ class OrderModel {
       idKasir: map['id_kasir'] as int,
       namaKasir: map['nama_kasir'] as String,
       isSync: map['is_sync'] == 1 ? true : false,
+      id: map['id']?.toInt() ?? 0,
+      transactionTime: map['transaction_time'] ?? '',
     );
   }
 
@@ -103,6 +88,8 @@ class OrderModel {
       idKasir: map['idKasir'] as int,
       namaKasir: map['namaKasir'] as String,
       isSync: map['is_sync'] as bool,
+      id: map['id']?.toInt() ?? 0,
+      transactionTime: map['transaction_time'] ?? '',
     );
   }
 

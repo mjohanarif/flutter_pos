@@ -7,6 +7,7 @@ import 'package:flutter_pos/data/datasources/product_local_datasource.dart';
 import 'package:flutter_pos/presentation/order/bloc/order/order_bloc.dart';
 import 'package:flutter_pos/presentation/order/models/order_model.dart';
 import 'package:flutter_pos/presentation/order/widgets/payment_success_dialog.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/components/buttons.dart';
 import '../../../core/components/custom_text_field.dart';
@@ -122,6 +123,8 @@ class _PaymentCashDialogState extends State<PaymentCashDialog> {
                     totalPrice: totalPrice,
                     idKasir: idKasir,
                     namaKasir: namaKasir,
+                    transactionTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                        .format(DateTime.now()),
                     isSync: false,
                   );
                   ProductLocalDatasource.instance.saveOrder(orderModel);

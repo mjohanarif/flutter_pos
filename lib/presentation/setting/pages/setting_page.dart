@@ -3,15 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pos/core/assets/assets.gen.dart';
 import 'package:flutter_pos/core/components/menu_button.dart';
 import 'package:flutter_pos/core/components/spaces.dart';
-import 'package:flutter_pos/core/constants/colors.dart';
 import 'package:flutter_pos/core/extensions/build_context_ext.dart';
 import 'package:flutter_pos/data/datasources/auth_local_datasource.dart';
-import 'package:flutter_pos/data/datasources/product_local_datasource.dart';
 import 'package:flutter_pos/presentation/auth/pages/login_page.dart';
 import 'package:flutter_pos/presentation/home/bloc/logout/logout_bloc.dart';
-import 'package:flutter_pos/presentation/home/bloc/product/product_bloc.dart';
 import 'package:flutter_pos/presentation/setting/pages/manage_product_page.dart';
 import 'package:flutter_pos/presentation/setting/pages/save_server_key_page.dart';
+import 'package:flutter_pos/presentation/setting/pages/sync_data_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -73,52 +71,22 @@ class _SettingPageState extends State<SettingPage> {
                 MenuButton(
                   iconPath: Assets.images.managePrinter.path,
                   label: 'Sinkronisasi Data',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const SyncDataPage();
+                        },
+                      ),
+                    );
+                  },
                   isImage: true,
                 ),
               ],
             ),
           ),
           const SpaceHeight(60),
-          BlocConsumer<ProductBloc, ProductState>(
-            listener: (context, state) {
-              state.maybeMap(
-                orElse: () {},
-                success: (response) async {
-                  await ProductLocalDatasource.instance.removeAllProduct();
-                  await ProductLocalDatasource.instance.insertAllProduct(
-                    response.response.toList(),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Sync Data Succeed'),
-                      backgroundColor: AppColors.primary,
-                    ),
-                  );
-                },
-              );
-            },
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () {
-                  return ElevatedButton(
-                    onPressed: () {
-                      context.read<ProductBloc>().add(
-                            const ProductEvent.fetch(),
-                          );
-                    },
-                    child: const Text('Sync Data'),
-                  );
-                },
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              );
-            },
-          ),
-          const Divider(),
           BlocConsumer<LogoutBloc, LogoutState>(
             listener: (context, state) {
               state.maybeWhen(
